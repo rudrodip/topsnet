@@ -6,7 +6,7 @@ const HeroSection: React.FC = () => {
     <div className="bg-transparent py-20 flex justify-evenly items-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:flex lg:items-center lg:justify-between">
-          <div className="text-left lg:w-1/2">
+          <div className="text-left lg:w-1/2 lg:my-0 my-5">
             <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
               Open Science
             </h1>
