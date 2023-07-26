@@ -1,34 +1,82 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TOPSnet Web Application
 
-## Getting Started
+TOPSNET is a professional web application built to accelerate NASA's transformation to open science goals. The platform enables researchers to discover, share, and collaborate on open research papers and resources. The application is developed using Next.js 13, Tailwind CSS, TypeScript, and integrates Firebase for database and authentication functionalities.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Technologies](#technologies)
+- [Credits](#credits)
+- [Contact](#contact)
+- [License](#license)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Research Search Engine: Discover research papers, datasets, and other open research resources with advanced search filters.
+- Research Recommendation Engine: Receive personalized research recommendations based on your interests and activity.
+- Read Research Paper: Enjoy a user-friendly reading interface to access research papers directly within the platform.
+- Share Research Paper: Easily upload and share your research papers with a wider audience.
+- Collaboration Tools: Find potential collaborators for your research projects and communicate seamlessly.
+- Open Science Events and Webinars: Participate in virtual events and workshops to learn about open science practices.
+- Open Peer Review System: Contribute to the transparent peer review process for research papers.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+1. Clone the repository:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/rudrodip/topsnet.git
+   cd topsnet
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install the required dependencies:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   yarn
+   yarn dev
+   ```
 
-## Deploy on Vercel
+3. Set up Firebase:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   - Create a Firebase project on the Firebase console (https://console.firebase.google.com/).
+   - Enable Firebase Authentication and Firestore Database.
+   - Copy your Firebase configuration (apiKey, authDomain, projectId, etc.) from the Firebase console and replace it in `firebase/firebaseConfig.ts`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+4. Run the development server:
+
+   ```bash
+   yarn dev
+   ```
+
+5. Open your browser and navigate to `http://localhost:3000` to access the TOPSNET web application.
+
+## Technologies
+
+The TOPSNET web application is built with the following technologies:
+
+- Next.js 13
+- Tailwind CSS
+- TypeScript
+- Firebase (Firestore, Authentication)
+
+## Credits
+
+The development of TOPSNET is made possible by the following organizations and platforms:
+
+- [Zenodo](https://zenodo.org): Providing access to research papers and resources.
+- [ORCID](https://orcid.org): Enabling unique and persistent identifiers for researchers.
+- [NASA](https://www.nasa.gov): Inspiring scientific discoveries and open science initiatives.
+
+## Contact
+
+For any inquiries or support, you can reach out to the developer:
+
+- Email: official.rudrodipsarker@gmail.com
+- GitHub: [rudrodip](https://github.com/rudrodip)
+- Personal Website: [https://rudrodipsarker.vercel.app](https://rudrodipsarker.vercel.app)
+
+## License
+
+The TOPSNET web application is open-source and licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code according to the terms of the license.
