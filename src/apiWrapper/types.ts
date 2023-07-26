@@ -41,6 +41,7 @@ type ZenodoData = {
         creators: {
           affiliation: string;
           name: string;
+          orcid: string;
         }[];
         description: string;
         doi: string;
