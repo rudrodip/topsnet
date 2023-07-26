@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from './ui/button';
-import { useState } from 'react';
+import Image from 'next/image';
 
 const HeroSection: React.FC = () => {
   return (
@@ -23,7 +22,12 @@ const HeroSection: React.FC = () => {
 
           <div className='flex justify-center items-center'>
             <div>
-              <img src="https://media.tenor.com/RxkhHB6PUmUAAAAC/sherlock-do-your-research.gif" alt="" />
+              <Image 
+                src="https://media.tenor.com/RxkhHB6PUmUAAAAC/sherlock-do-your-research.gif"
+                alt=""
+                width={500}
+                height={500}
+              />
             </div>
           </div>
         </div>
