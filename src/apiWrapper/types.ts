@@ -79,6 +79,21 @@ type ZenodoData = {
   };
 };
 
+/**
+ * Represents the query parameters for the Zenodo API request.
+ *
+ * @param {string} q - Search query using Elasticsearch query string syntax.
+ * @param {string} status - Filter result based on the deposit status (either draft or published).
+ * @param {string} sort - Sort order (bestmatch or mostrecent). Prefix with minus to change from ascending to descending (e.g., -mostrecent).
+ * @param {number} page - Page number for pagination.
+ * @param {number} size - Number of results to return per page.
+ * @param {number | string} all_versions - Show (true or 1) or hide (false or 0) all versions of records.
+ * @param {string} communities - Return records that are part of the specified communities. (Use community identifier)
+ * @param {string} type - Return records of the specified type. (Publication, Poster, Presentation, etc.)
+ * @param {string} subtype - Return records of the specified subtype. (Journal article, Preprint, Proposal, etc.)
+ * @param {string} bounds - Return records filtered by a geolocation bounding box. (Format: bounds=143.37158,-38.99357,146.90918,-37.35269)
+ * @param {string} custom - Return records containing the specified custom keywords. (Format: custom=[field_name]:field_value)
+ */
 type ZenodoQueryParams = {
   q?: string;
   status?: string;
