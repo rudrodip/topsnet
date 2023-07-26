@@ -28,7 +28,7 @@ const Footer = () => {
             Zenodo
           </a>
           <a
-            href="https://orcid.org/your-orcid-id"
+            href="https://orcid.org/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-400 hover:text-white"
