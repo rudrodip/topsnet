@@ -12,7 +12,7 @@ export default function Home() {
   const [data, setData] = useState<ZenodoData | null>(null)
 
   useEffect(() => {
-    zenodoApi.getRecords({ q: "physics", size: 1 })
+    zenodoApi.getRecords({ q: "neuralnetwork", size: 20 })
       .then(res => setData(res))
   }, [])
 
@@ -21,9 +21,9 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <div className="container">
-        <TrendingSection />
+        <TrendingSection data={data} />
       </div>
-      <PaperSection />
+      <PaperSection data={data} />
     </div>
   )
 }
