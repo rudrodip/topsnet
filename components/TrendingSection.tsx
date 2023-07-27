@@ -18,12 +18,12 @@ export default function TrendingSection({ data }: TrendingSectionProps) {
             return (
               <PaperCard
                 key = {index}
+                id={data['hits']['hits'][index]['id']}
                 published={data['hits']['hits'][index]['metadata']['publication_date']}
                 resource_type={data['hits']['hits'][index]['metadata']['resource_type']['title']}
                 access={data['hits']['hits'][index]['metadata']['access_right']}
                 title={data['hits']['hits'][index]['metadata']['title']}
                 contributors={data['hits']['hits'][index]['metadata']['creators']}
-                versions={data['hits']['hits'][index]['metadata']['version']}
               />
             )
           }
