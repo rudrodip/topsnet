@@ -10,17 +10,12 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body suppressHydrationWarning={true}>
-          <div className="main">
-            <div className="gradient" />
-          </div>
-          <Navbar />
-          {children}
-          <Footer />
-        </body>
-      </html>
+      <div className="main">
+        <div className="gradient" />
+      </div>
+      <Navbar />
+      {children}
+      <Footer />
     </>
   )
 }
