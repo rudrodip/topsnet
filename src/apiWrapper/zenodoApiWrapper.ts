@@ -1,4 +1,4 @@
-import {ZenodoQueryParams, ZenodoData} from "./types";
+import {ZenodoQueryParams, ZenodoData, Hit} from "./types";
 
 const BASE_URL = 'https://zenodo.org/api/records/';
 
@@ -24,8 +24,25 @@ async function fetchZenodoApi(queryParams: ZenodoQueryParams): Promise<ZenodoDat
   }
 }
 
+async function fetchRecord(id: string): Promise<Hit>{
+  const url = `${BASE_URL}${id}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Network response was not ok.');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
+
 const zenodoApi = {
   getRecords: fetchZenodoApi,
+  getRecord: fetchRecord
 };
 
 export default zenodoApi;
