@@ -1,85 +1,149 @@
-type ZenodoData = {
-  aggregations: {
-    access_right: {
-      buckets: {
-        doc_count: number;
-        key: string;
-      }[];
-    };
-    file_type: {
-      buckets: {
-        doc_count: number;
-        key: string;
-      }[];
-    };
-    keywords: {
-      buckets: {
-        doc_count: number;
-        key: string;
-      }[];
-    };
-    type: {
-      buckets: {
-        doc_count: number;
-        key: string;
-      }[];
-    };
+interface Bucket {
+  doc_count: number;
+  key: string;
+}
+
+interface SubtypeBucket {
+  doc_count: number;
+  key: string;
+}
+
+interface Aggregations {
+  access_right: {
+    buckets: Bucket[];
+    doc_count_error_upper_bound: number;
+    sum_other_doc_count: number;
   };
-  hits: {
-    hits: {
-      conceptdoi: string;
-      description: string;
-      title: string;
-      version: string;
-      metadata: {
-        access_right: string;
-        contributors: {
-          affiliation: string;
-          name: string;
-          type: string;
-        }[];
-        creators: {
-          affiliation: string;
-          name: string;
-          orcid: string;
-        }[];
-        description: string;
-        doi: string;
-        keywords: string[];
-        language: string;
-        license: {
-          id: string;
-        };
-        publication_date: string;
-        resource_type: {
-          subtype: string;
-          title: string;
-          type: string;
-        };
-        title: string;
-        version: string;
-      };
-      stats: {
-        downloads: number;
-        unique_downloads: number;
-        unique_views: number;
-        version_downloads: number;
-        version_unique_downloads: number;
-        version_unique_views: number;
-        version_views: number;
-        version_volume: number;
-        views: number;
-        volume: number;
+  file_type: {
+    buckets: Bucket[];
+    doc_count_error_upper_bound: number;
+    sum_other_doc_count: number;
+  };
+  keywords: {
+    buckets: Bucket[];
+    doc_count_error_upper_bound: number;
+    sum_other_doc_count: number;
+  };
+  type: {
+    buckets: {
+      doc_count: number;
+      key: string;
+      subtype: {
+        buckets: SubtypeBucket[];
+        doc_count_error_upper_bound: number;
+        sum_other_doc_count: number;
       };
     }[];
-    total: number;
+    doc_count_error_upper_bound: number;
+    sum_other_doc_count: number;
   };
+}
+
+interface Links {
+  badge: string;
+  bucket: string;
+  conceptbadge: string;
+  conceptdoi: string;
+  doi: string;
+  html: string;
+  latest: string;
+  latest_html: string;
+  self: string;
+}
+
+interface File {
+  bucket: string;
+  checksum: string;
+  key: string;
+  links: {
+    self: string;
+  };
+  size: number;
+  type: string;
+}
+
+interface Metadata {
+  access_right: string;
+  access_right_category: string;
+  creators: {
+    affiliation?: string;
+    name: string;
+    orcid?: string;
+  }[];
+  description: string;
+  doi: string;
+  keywords: string[];
+  license: {
+    id: string;
+  };
+  publication_date: string;
+  related_identifiers: {
+    identifier: string;
+    relation: string;
+    scheme: string;
+  }[];
+  relations: {
+    version: {
+      count: number;
+      index: number;
+      is_last: boolean;
+      last_child: {
+        pid_type: string;
+        pid_value: string;
+      };
+      parent: {
+        pid_type: string;
+        pid_value: string;
+      };
+    };
+  };
+  resource_type: {
+    subtype: string;
+    title: string;
+    type: string;
+  };
+  title: string;
+}
+
+interface Hit {
+  conceptdoi: string;
+  conceptrecid: string;
+  created: string;
+  doi: string;
+  files: File[];
+  id: number;
+  links: Links;
+  metadata: Metadata;
+  owners: number[];
+  revision: number;
+  stats: {
+    downloads: number;
+    unique_downloads: number;
+    unique_views: number;
+    version_downloads: number;
+    version_unique_downloads: number;
+    version_unique_views: number;
+    version_views: number;
+    version_volume: number;
+    views: number;
+    volume: number;
+  };
+  updated: string;
+}
+
+interface Hits {
+  hits: Hit[];
+  total: number;
+}
+
+interface ZenodoData {
+  aggregations: Aggregations;
+  hits: Hits;
   links: {
     next: string;
     self: string;
   };
-};
-
+}
 /**
  * Represents the query parameters for the Zenodo API request.
  *
@@ -109,4 +173,4 @@ type ZenodoQueryParams = {
   custom?: string;
 };
 
-export type {ZenodoQueryParams, ZenodoData}
+export type {ZenodoQueryParams, ZenodoData, Hit}
