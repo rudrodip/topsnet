@@ -1,4 +1,7 @@
+'use client'
+
 import React from 'react';
+import Link from "next/link"
 import { useAuthContext } from '@context/AuthContext';
 import { signOut } from 'firebase/auth'
 import { auth } from '@src/firebase/config';
@@ -72,9 +75,9 @@ export default Navbar;
 const NavButton: React.FC<NavButtonProps> = ({ link, url }) => {
   return (
     <li>
-      <a href={url} className="text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-md transition-all delay-100 ease-in-out hidden md:block">
+      <Link href={url} className="text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-md transition-all delay-100 ease-in-out hidden md:block">
         {link}
-      </a>
+      </Link>
     </li>
   );
 };
