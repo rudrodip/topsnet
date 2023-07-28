@@ -3,7 +3,7 @@ import React from 'react';
 const ContactPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
-      <div className="max-w-lg mx-auto p-8 shadow-lg rounded-lg">
+      <div className="bg-gray-800 bg-opacity-40 max-w-lg mx-auto p-8 shadow-lg rounded-lg">
         <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
         <p className="text-lg mb-6">Have questions or want to get in touch? Reach out to us through the following channels:</p>
         <div className="flex flex-col space-y-4">
