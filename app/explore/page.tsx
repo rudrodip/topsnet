@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState, useEffect, ChangeEvent, SyntheticEvent } from 'react'
-import Navbar from "@components/Navbar"
+import React, { useState, useEffect } from 'react'
 import Tag from "@components/Tag"
 import PaperCard from '@components/Papers/PaperCard'
+import LoadSpinner from '@components/LoadSpinner'
 import { ZenodoData } from '@src/apiWrapper/types'
 import zenodoApi from '@src/apiWrapper/zenodoApiWrapper'
 import {
@@ -25,6 +25,7 @@ import { Input } from '@components/ui/input'
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { useForm } from "react-hook-form"
+import { useExplorerContext } from '@context/ExplorerContext'
 
 const FormSchema = z.object({
   search: z.string().min(2, {
@@ -41,34 +42,44 @@ const Explore = () => {
   const [loading, setLoading] = useState<boolean>(false)
 
   // api response ZenodoData
-  const [data, setData] = useState<ZenodoData | null>(null)
-
-  useEffect(()=>{
-    zenodoApi.getRecords({size: 6})
-      .then(res => setData(res))
-      .catch(err => console.log(err))
-  }, [])
+  const { data: contextData, setData: setContextData } = useExplorerContext();
+  const [data, setData] = useState<ZenodoData | null>(contextData);
+  
+  useEffect(() => {
+    setData(contextData);
+  }, [contextData]);  
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
 
+  const fetchData = (data: z.infer<typeof FormSchema>) => {
+    setLoading(true);
+    zenodoApi
+      .getRecords({
+        q: data.search,
+        sort: data.sort,
+        page: page,
+        size: parseInt(data.size),
+        ...(data.status && { status: data.status })
+      })
+      .then(res => {
+        setData(res);
+        setContextData(res)
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    setLoading(true)
-    zenodoApi.getRecords({
-      q: data.search,
-      sort: data.sort,
-      page: page,
-      size: parseInt(data.size),
-      ...(data.status && { status: data.status })
-    })
-      .then(res => setData(res))
-      .catch(err => console.log(err))
-    setLoading(false)
+    fetchData(data)
   }
 
   return <>
-    <Navbar />
     <div className="my-5 mx-1">
       <h1 className="text-center font-extrabold tracking-tight text-white text-4xl sm:text-5xl md:text-6xl">Explore</h1>
       <div className="lg:flex justify-center items-center my-5 hidden">
@@ -179,6 +190,7 @@ const Explore = () => {
         </div>
       </div>
       <div className='container mx-auto'>
+        {loading && <LoadSpinner />}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {data &&
             Array(data['hits']['hits'].length).fill(null).map((_, index) => {
@@ -190,7 +202,7 @@ const Explore = () => {
                   resource_type={data['hits']['hits'][index]['metadata']['resource_type']['title']}
                   access={data['hits']['hits'][index]['metadata']['access_right']}
                   title={data['hits']['hits'][index]['metadata']['title']}
-                  contributors={data['hits']['hits'][index]['metadata']['creators']}
+                  creators={data['hits']['hits'][index]['metadata']['creators']}
                 />
               )
             }
