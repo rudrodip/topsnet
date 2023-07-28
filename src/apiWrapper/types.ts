@@ -65,6 +65,9 @@ interface File {
 interface Metadata {
   access_right: string;
   access_right_category: string;
+  communities?: {
+    id: string;
+  }[];
   creators: {
     affiliation?: string;
     name: string;
@@ -72,6 +75,12 @@ interface Metadata {
   }[];
   description: string;
   doi: string;
+  journal?: {
+    issue: string;
+    pages: string;
+    title: string;
+    volume: string;
+  }
   keywords: string[];
   license: {
     id: string;
@@ -95,7 +104,7 @@ interface Metadata {
         pid_type: string;
         pid_value: string;
       };
-    };
+    }[];
   };
   resource_type: {
     subtype: string;
