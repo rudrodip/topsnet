@@ -1,6 +1,12 @@
 import Link from "next/link"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@components/ui/tooltip"
 
-interface Contributors {
+interface Creators {
   affiliation?: string,
   name: string,
   orcid?: string
@@ -11,10 +17,10 @@ interface PaperCardProps {
   resource_type: string,
   access: string,
   title: string,
-  contributors: Contributors[],
+  creators: Creators[],
 }
 
-const PaperCard = ({ id, published, resource_type, access, title, contributors }: PaperCardProps) => {
+const PaperCard = ({ id, published, resource_type, access, title, creators }: PaperCardProps) => {
   return (
     <div className="bg-gray-700 bg-opacity-40 backdrop-blur-lg max-w-xl p-4 rounded-lg text-gray-300 hover:bg-gray-900 delay-75 transition-all ease-in-out cursor-pointer m-2 z-10">
       <div className="flex text-sm flex-wrap">
@@ -27,11 +33,21 @@ const PaperCard = ({ id, published, resource_type, access, title, contributors }
       </Link>
       <p>Contributors</p>
       <div className="flex flex-wrap my-2">
-        {contributors.map(elem => {
-          return (
-            <p key={contributors.indexOf(elem)} className="rounded-sm bg-gray-600 p-1 mr-1 text-sm my-1">{elem['name']}</p>
-          )
-        })}
+      {creators?.map((elem, index) => {
+            return (
+              <TooltipProvider key={index}>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <p className="rounded-sm bg-gray-600 p-1 mr-1 text-sm my-1">{elem['name']}</p>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {elem?.affiliation && <p>Affiliation: {elem.affiliation}</p>}
+                    {elem?.orcid && <p>ORCID: {elem.orcid}</p>}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )
+          })}
       </div>
     </div>
   );
