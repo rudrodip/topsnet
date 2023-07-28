@@ -23,7 +23,7 @@ export default function TrendingSection({ data }: TrendingSectionProps) {
                 resource_type={data['hits']['hits'][index]['metadata']['resource_type']['title']}
                 access={data['hits']['hits'][index]['metadata']['access_right']}
                 title={data['hits']['hits'][index]['metadata']['title']}
-                contributors={data['hits']['hits'][index]['metadata']['creators']}
+                creators={data['hits']['hits'][index]['metadata']['creators']}
               />
             )
           }
