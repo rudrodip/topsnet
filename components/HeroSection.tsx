@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const HeroSection: React.FC = () => {
   return (
@@ -14,9 +15,9 @@ const HeroSection: React.FC = () => {
               TOPSnet: Uniting Researchers in Open Science. Explore, Share, Collaborate, and Discover Together for a More Inclusive Future of Scientific Innovation.
             </p>
             <div className="mt-5 sm:mt-8 lg:mt-12">
-              <a href="/explore" className="p-3 rounded-md text-sm bg-white text-black">
+              <Link href="/explore" className="p-3 rounded-md text-sm bg-white text-black">
                 Explore
-              </a>
+              </Link>
             </div>
           </div>
 
