@@ -77,7 +77,7 @@ export default Navbar;
 const NavButton: React.FC<NavButtonProps> = ({ link, url }) => {
   return (
     <li>
-      <Link href={url} className="text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-md transition-all delay-100 ease-in-out hidden md:block">
+      <Link href={url} className="text-gray-300 hover:bg-gray-700 hover:bg-opacity-40 px-3 py-2 rounded-md transition-all delay-100 ease-in-out hidden md:block">
         {link}
       </Link>
     </li>
