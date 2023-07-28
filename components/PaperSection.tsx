@@ -3,6 +3,7 @@ import { Skeleton } from "@components/ui/skeleton"
 import { Separator } from "@components/ui/separator"
 import PaperCard from "./Papers/PaperCard"
 import { ZenodoData } from "@src/apiWrapper/types"
+import Tag from "./Tag"
 
 interface PaperSectionProps {
   data: ZenodoData | null
@@ -66,16 +67,3 @@ const ResearchPaper = () => {
     </div>
   )
 }
-
-interface TagProps {
-  text: string;
-  url: string;
-}
-
-const Tag: React.FC<TagProps> = ({ text, url }) => {
-  return (
-    <a href={url} className="inline-block py-2 px-4 bg-gray-300 text-gray-800 rounded-lg shadow-md hover:bg-gray-100 transition duration-200 ease-in-out">
-      {text}
-    </a>
-  );
-};
