@@ -22,6 +22,7 @@ import React, { useState, SyntheticEvent } from 'react'
 import signInWithGoogle from "@src/firebase/auth/signInWithGoogle"
 import signInWithFB from "@src/firebase/auth/signInWithFB"
 import signInWithGithub from "@src/firebase/auth/signInWIthGithub"
+import { createUserData } from "@src/firebase/createUserData"
 import { useAuthContext } from "@context/AuthContext"
 import { useRouter } from "next/navigation"
 
@@ -30,38 +31,59 @@ export default function Signin() {
   const { user } = useAuthContext()
   const router = useRouter()
 
-  const handleGoogleSignIn = (e: SyntheticEvent) => {
-    setLoading(true)
-    e.preventDefault()
+  const handleGoogleSignIn = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    setLoading(true);
     try {
-      signInWithGoogle()
+      const { user, isNewUser, error } = await signInWithGoogle();
+      if (error) {
+        console.log("Error occurred during sign-in:", error);
+      } else {
+        if (user && isNewUser) {
+          await createUserData(user, {});
+        }
+      }
     } catch (error) {
-      console.log(error)
+      console.log("Error occurred during sign-in:", error);
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
-  const handleFBsignIn = (e: SyntheticEvent) => {
-    setLoading(true)
-    e.preventDefault()
+  const handleFBsignIn = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    setLoading(true);
     try {
-      signInWithFB()
+      const { user, isNewUser, error } = await signInWithFB();
+      if (error) {
+        console.log("Error occurred during sign-in:", error);
+      } else {
+        if (user && isNewUser) {
+          await createUserData(user, {});
+        }
+      }
     } catch (error) {
-      console.log(error)
+      console.log("Error occurred during sign-in:", error);
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
-  const handleGithubSignIn = (e: SyntheticEvent) => {
-    setLoading(true)
-    e.preventDefault()
+  const handleGithubSignIn = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    setLoading(true);
     try {
-      signInWithGithub()
+      const { user, isNewUser, error } = await signInWithGithub();
+      if (error) {
+        console.log("Error occurred during sign-in:", error);
+      } else {
+        if (user && isNewUser) {
+          await createUserData(user, {});
+        }
+      }
     } catch (error) {
-      console.log(error)
+      console.log("Error occurred during sign-in:", error);
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   user && router.push('/')
   if (!user) return (
