@@ -88,7 +88,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 return (
                   <div key={index} className="flex justify-between">
                     <p>{file.key}</p>
-                    <p>{file.size * 1e-6}MB</p>
+                    <p>{(file.size * 1e-6).toFixed(3)}MB</p>
                     <a className="underline" href={file['links']['self']}>Download</a>
                   </div>
                 )
