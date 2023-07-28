@@ -2,6 +2,7 @@ import "@styles/globals.css";
 import type { Metadata } from 'next'
 import React from 'react';
 import { AuthContextProvider } from "@context/AuthContext";
+import { ExplorerContextProvider } from "@context/ExplorerContext";
 import { Toaster } from "@components/ui/toaster"
 
 interface RootLayoutProps {
@@ -27,7 +28,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="gradient" />
           </div>
           <AuthContextProvider>
+            <ExplorerContextProvider>
               {children}
+            </ExplorerContextProvider>
           </AuthContextProvider>
           <Toaster />
         </body>
