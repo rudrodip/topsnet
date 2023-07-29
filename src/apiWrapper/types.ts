@@ -146,9 +146,9 @@ interface Hits {
 }
 
 interface ZenodoData {
-  aggregations: Aggregations;
+  aggregations?: Aggregations;
   hits: Hits;
-  links: {
+  links?: {
     next: string;
     self: string;
   };
