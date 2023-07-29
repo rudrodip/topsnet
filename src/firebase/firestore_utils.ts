@@ -9,7 +9,7 @@ function addLike(user: User | null, id: number){
 }
 
 function addPinned(user: User | null, id: number){
-  updateUserData(user, {saved: arrayUnion(id)})
+  updateUserData(user, {pinned: arrayUnion(id)})
     .then(_ => console.log("updated"))
     .catch(err => console.log(err))
 }
@@ -22,7 +22,7 @@ function removeLike(user: User | null, id: number){
 
 
 function removePinned(user: User | null, id: number){
-  updateUserData(user, {saved: arrayRemove(id)})
+  updateUserData(user, {pinned: arrayRemove(id)})
     .then(_ => console.log("updated"))
     .catch(err => console.log(err))
 }
