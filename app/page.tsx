@@ -12,7 +12,7 @@ export default async function Home() {
       <Navbar />
       <HeroSection />
       <div className="container">
-        <TrendingSection data={data} />
+        <TrendingSection />
       </div>
       <PaperSection data={data} />
     </div>
