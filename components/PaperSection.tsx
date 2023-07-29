@@ -1,15 +1,19 @@
+'use client'
+
 import React from "react"
 import { Skeleton } from "@components/ui/skeleton"
 import { Separator } from "@components/ui/separator"
 import PaperCard from "./Papers/PaperCard"
 import { ZenodoData } from "@src/apiWrapper/types"
 import Tag from "./Tag"
+import { useExplorerContext } from "@context/ExplorerContext"
 
 interface PaperSectionProps {
   data: ZenodoData | null
 }
 
 export default function PaperSection({ data }: PaperSectionProps) {
+  const { liked, pinned, addToLiked, removeFromLiked, addToPinned, removeFromPinned } = useExplorerContext();
   return (
     <div>
       <Separator className="my-10" />
@@ -44,6 +48,22 @@ export default function PaperSection({ data }: PaperSectionProps) {
                   access={data['hits']['hits'][index]['metadata']['access_right']}
                   title={data['hits']['hits'][index]['metadata']['title']}
                   creators={data['hits']['hits'][index]['metadata']['creators']}
+                  liked={liked?.includes(data['hits']['hits'][index]['id'])} // Check if the id is present in the liked array
+                  pinned={pinned?.includes(data['hits']['hits'][index]['id'])} // Check if the id is present in the pinned array
+                  onLike={() => {
+                    if (liked?.includes(data['hits']['hits'][index]['id'])) {
+                      removeFromLiked(data['hits']['hits'][index]['id']);
+                    } else {
+                      addToLiked(data['hits']['hits'][index]['id']);
+                    }
+                  }}
+                  onPin={() => {
+                    if (pinned?.includes(data['hits']['hits'][index]['id'])) {
+                      removeFromPinned(data['hits']['hits'][index]['id']);
+                    } else {
+                      addToPinned(data['hits']['hits'][index]['id']);
+                    }
+                  }}
                 />
               )
             }
