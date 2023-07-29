@@ -16,7 +16,7 @@ const HeroSection: React.FC = () => {
             </p>
             <div className="mt-5 sm:mt-8 lg:mt-12">
               <Link href="/explore" className="p-3 rounded-md text-sm bg-white text-black">
-                Explore
+              🔎 Explore
               </Link>
             </div>
           </div>
