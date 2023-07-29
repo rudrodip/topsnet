@@ -42,12 +42,12 @@ const Explore = () => {
   const [loading, setLoading] = useState<boolean>(false)
 
   // api response ZenodoData
-  const { data: contextData, setData: setContextData } = useExplorerContext();
+  const { data: contextData, setData: setContextData, liked, pinned, addToLiked, removeFromLiked, addToPinned, removeFromPinned } = useExplorerContext();
   const [data, setData] = useState<ZenodoData | null>(contextData);
-  
+
   useEffect(() => {
     setData(contextData);
-  }, [contextData]);  
+  }, [contextData]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -203,6 +203,22 @@ const Explore = () => {
                   access={data['hits']['hits'][index]['metadata']['access_right']}
                   title={data['hits']['hits'][index]['metadata']['title']}
                   creators={data['hits']['hits'][index]['metadata']['creators']}
+                  liked={liked?.includes(data['hits']['hits'][index]['id'])} // Check if the id is present in the liked array
+                  pinned={pinned?.includes(data['hits']['hits'][index]['id'])} // Check if the id is present in the pinned array
+                  onLike={() => {
+                    if (liked?.includes(data['hits']['hits'][index]['id'])) {
+                      removeFromLiked(data['hits']['hits'][index]['id']);
+                    } else {
+                      addToLiked(data['hits']['hits'][index]['id']);
+                    }
+                  }}
+                  onPin={() => {
+                    if (pinned?.includes(data['hits']['hits'][index]['id'])) {
+                      removeFromPinned(data['hits']['hits'][index]['id']);
+                    } else {
+                      addToPinned(data['hits']['hits'][index]['id']);
+                    }
+                  }}
                 />
               )
             }
