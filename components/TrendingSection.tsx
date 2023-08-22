@@ -1,48 +1,57 @@
-'use client'
-
 import { Skeleton } from "@components/ui/skeleton";
 import PaperCard from "./Papers/PaperCard";
-import { useExplorerContext } from "@context/ExplorerContext";
+import { db } from "@src/firebase/config";
+import { Hit } from "@src/apiWrapper/types";
+import zenodoApi from "@src/apiWrapper/zenodoApiWrapper";
+import { doc, getDoc } from "firebase/firestore";
 
-export default function TrendingSection() {
-  const { data, liked, pinned, addToLiked, removeFromLiked, addToPinned, removeFromPinned } = useExplorerContext();
+const getTrending = async () => {
+  const trendingRef = doc(db, `trending/overall-trending`);
+  const trendingIDs: { trending: number[] } = (await getDoc(trendingRef)).data() as {
+    trending: number[];
+  };
+  let data: Hit[] = [];
+  // Use Promise.all to wait for all the Promises to resolve
+  await Promise.all(
+    trendingIDs.trending.map((id) =>
+      zenodoApi
+        .getRecord(id.toString())
+        .then((res) => {
+          data.push(res);
+        })
+        .catch((err) => console.log(err))
+    )
+  );
+  return data;
+};
+
+export default async function TrendingSection() {
+  const data = await getTrending()
   return (
     <div>
-      <h1 className="text-md">📈 Trending on TOPSnet</h1>
+      <h1 className="text-md mx-3">📈 Trending on TOPSnet</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {data === null ? (
-          Array(6).fill(null).map((_, index) => <TrendCard key={index} />)
-        ) : (
-          Array(data.hits.hits.length).fill(null).map((_, index) => {
-            return (
-              <PaperCard
-                key={index}
-                id={data['hits']['hits'][index]['id']}
-                published={data['hits']['hits'][index]['metadata']['publication_date']}
-                resource_type={data['hits']['hits'][index]['metadata']['resource_type']['title']}
-                access={data['hits']['hits'][index]['metadata']['access_right']}
-                title={data['hits']['hits'][index]['metadata']['title']}
-                creators={data['hits']['hits'][index]['metadata']['creators']}
-                liked={liked?.includes(data['hits']['hits'][index]['id'])} // Check if the id is present in the liked array
-                pinned={pinned?.includes(data['hits']['hits'][index]['id'])} // Check if the id is present in the pinned array
-                onLike={() => {
-                  if (liked?.includes(data['hits']['hits'][index]['id'])) {
-                    removeFromLiked(data['hits']['hits'][index]['id']);
-                  } else {
-                    addToLiked(data['hits']['hits'][index]['id']);
-                  }
-                }}
-                onPin={() => {
-                  if (pinned?.includes(data['hits']['hits'][index]['id'])) {
-                    removeFromPinned(data['hits']['hits'][index]['id']);
-                  } else {
-                    addToPinned(data['hits']['hits'][index]['id']);
-                  }
-                }}
-              />
-            );
-          })
-        )}
+        {data ?
+        data.map((data, index) => {
+          return (
+            <PaperCard
+              key={index}
+              id={data['id']}
+              published={data.metadata.publication_date}
+              resource_type={data.metadata.resource_type.title}
+              access={data.metadata.access_right}
+              title={data.metadata.title}
+              creators={data.metadata.creators}
+            />
+          )
+        })
+        :
+        Array(6).fill(null).map((_, index) => {
+          return (
+            <TrendCard key={index} />
+          )
+        })
+      }
       </div>
     </div>
   );
