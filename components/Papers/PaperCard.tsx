@@ -23,10 +23,10 @@ interface PaperCardProps {
   access: string;
   title: string;
   creators: Creators[];
-  liked: boolean;
-  pinned: boolean;
-  onLike: () => void;
-  onPin: () => void;
+  liked?: boolean;
+  pinned?: boolean;
+  onLike?: () => void;
+  onPin?: () => void;
 }
 
 const PaperCard = ({
@@ -43,7 +43,7 @@ const PaperCard = ({
 }: PaperCardProps) => {
   const { user } = useAuthContext()
   return (
-    <div className="flex justify-between bg-gray-700 bg-opacity-40 backdrop-blur-lg max-w-xl p-4 rounded-lg text-gray-300 hover:bg-gray-900 delay-75 transition-all ease-in-out m-2 z-10">
+    <div className="flex justify-between border-2 max-w-xl p-4 rounded-lg text-gray-300 hover:bg-black delay-75 transition ease-in-out m-2 z-10 duration-200">
       <div>
         <div className="flex text-sm flex-wrap">
           <p className="rounded-sm bg-blue-600 p-1 mr-1">{published}</p>
@@ -82,7 +82,7 @@ const PaperCard = ({
           })}
         </div>
       </div>
-      {user && (
+      {user && onLike && (
         <div className="flex-col items-center my-3 space-y-4">
           <Heart
             className="cursor-pointer"
