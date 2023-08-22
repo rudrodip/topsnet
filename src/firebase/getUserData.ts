@@ -5,7 +5,9 @@ import { User } from "firebase/auth";
 interface UserData{
   liked: number[],
   pinned: number[],
-  recommended: number[]
+  recommended: number[],
+  openaikey?: string,
+  orcid?: string,
 }
 
 async function getUserData(user: User | null): Promise<UserData | null>{
