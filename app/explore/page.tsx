@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { Skeleton } from '@components/ui/skeleton'
 import Tag from "@components/Tag"
 import PaperCard from '@components/Papers/PaperCard'
 import LoadSpinner from '@components/LoadSpinner'
@@ -26,6 +27,16 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { useExplorerContext } from '@context/ExplorerContext'
+import { doc, getDoc } from "firebase/firestore"
+import { db } from "@src/firebase/config"
+
+const getTrendingKeywords = async () => {
+  const trendingRef = doc(db, `trending/overall-trending`);
+  const trendingIDs: { keywords: string[] } = (await getDoc(trendingRef)).data() as {
+    keywords: string[];
+  };
+  return trendingIDs.keywords;
+};
 
 const FormSchema = z.object({
   search: z.string().min(2, {
@@ -44,9 +55,13 @@ const Explore = () => {
   // api response ZenodoData
   const { data: contextData, setData: setContextData, liked, pinned, addToLiked, removeFromLiked, addToPinned, removeFromPinned } = useExplorerContext();
   const [data, setData] = useState<ZenodoData | null>(contextData);
+  const [keywords, setKeywords] = useState<string[] | null>(null)
 
   useEffect(() => {
     setData(contextData);
+    getTrendingKeywords().then(
+      res => setKeywords(res)
+    )
   }, [contextData]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -84,20 +99,22 @@ const Explore = () => {
       <h1 className="text-center font-extrabold tracking-tight text-white text-4xl sm:text-5xl md:text-6xl">Explore</h1>
       <div className="lg:flex justify-center items-center my-5 hidden">
         <div className="flex flex-wrap justify-evenly">
-          <Tag url="https://google.com" text="Neural Network" />
-          <Tag url="https://google.com" text="Transformers" />
-          <Tag url="https://google.com" text="Linear Algebra" />
-          <Tag url="https://google.com" text="Activation Functions" />
-          <Tag url="https://google.com" text="Quantum Mechanics" />
-          <Tag url="https://google.com" text="Physics Engine" />
-          <Tag url="https://google.com" text="AlphaZero" />
-          <Tag url="https://google.com" text="Reinforcement Learning" />
+          {keywords ? keywords.map((word, index) => {
+            return (
+              <Tag key={index} text={word} url={`/explore/${word}`} />
+            )
+          }) :
+            Array(9).fill(null).map((_, index) => {
+              return (
+                <p key={index} className="inline-block w-24 h-6 py-1 px-2 lg:py-2 lg:px-4 bg-gray-600 animate-pulse rounded-full shadow-md mx-1 my-1"></p>
+              )
+            })}
         </div>
       </div>
       <div className="container mx-auto my-3">
         <div className='flex flex-wrap flex-col md:flex-col align-middle items-center justify-evenly my-3'>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full md:w-2/3 space-y-2 md:space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full md:w-1/2 space-y-2 md:space-y-6">
               <FormField
                 control={form.control}
                 name="search"
@@ -106,7 +123,7 @@ const Explore = () => {
                   <FormItem>
                     <FormLabel>Search</FormLabel>
                     <FormControl>
-                      <Input type='text' placeholder="Search" {...field} />
+                      <Input type='text' placeholder="Search" {...field} className='bg-gray-800 bg-opacity-30 shadow-lg' />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -182,47 +199,44 @@ const Explore = () => {
             </form>
           </Form>
         </div>
-        <div className='flex my-3 justify-center flex-wrap'>
-          <p>Recommended: </p>
-          <a href="" className='underline mx-2'>Neural Network</a>
-          <a href="" className='underline mx-2'>Neural Network</a>
-          <a href="" className='underline mx-2'>Neural Network</a>
-        </div>
       </div>
       <div className='container mx-auto'>
         {loading && <LoadSpinner />}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {data &&
-            Array(data['hits']['hits'].length).fill(null).map((_, index) => {
+        {data === null ? (
+            Array(20).fill(null).map((_, index) => <ResearchPaper key={index} />)
+          ) : (
+            Array(data.hits.hits.length).fill(null).map((_, index) => {
               return (
                 <PaperCard
                   key={index}
-                  id={data['hits']['hits'][index]['id']}
-                  published={data['hits']['hits'][index]['metadata']['publication_date']}
-                  resource_type={data['hits']['hits'][index]['metadata']['resource_type']['title']}
-                  access={data['hits']['hits'][index]['metadata']['access_right']}
-                  title={data['hits']['hits'][index]['metadata']['title']}
-                  creators={data['hits']['hits'][index]['metadata']['creators']}
-                  liked={liked?.includes(data['hits']['hits'][index]['id'])} // Check if the id is present in the liked array
-                  pinned={pinned?.includes(data['hits']['hits'][index]['id'])} // Check if the id is present in the pinned array
+                  id={data.hits.hits[index].id}
+                  published={data.hits.hits[index].metadata.publication_date}
+                  resource_type={data.hits.hits[index].metadata.resource_type.title}
+                  access={data.hits.hits[index].metadata.access_right}
+                  title={data.hits.hits[index].metadata.title}
+                  creators={data.hits.hits[index].metadata.creators}
+                  liked={liked?.includes(data.hits.hits[index].id)}
+                  pinned={pinned?.includes(data.hits.hits[index].id)}
                   onLike={() => {
-                    if (liked?.includes(data['hits']['hits'][index]['id'])) {
-                      removeFromLiked(data['hits']['hits'][index]['id']);
+                    if (liked?.includes(data.hits.hits[index].id)) {
+                      removeFromLiked(data.hits.hits[index].id);
                     } else {
-                      addToLiked(data['hits']['hits'][index]['id']);
+                      addToLiked(data.hits.hits[index].id);
                     }
                   }}
                   onPin={() => {
-                    if (pinned?.includes(data['hits']['hits'][index]['id'])) {
-                      removeFromPinned(data['hits']['hits'][index]['id']);
+                    if (pinned?.includes(data.hits.hits[index].id)) {
+                      removeFromPinned(data.hits.hits[index].id);
                     } else {
-                      addToPinned(data['hits']['hits'][index]['id']);
+                      addToPinned(data.hits.hits[index].id);
                     }
                   }}
                 />
               )
             }
-            )}
+            )
+          )}
         </div>
       </div>
     </div>
@@ -230,3 +244,15 @@ const Explore = () => {
 }
 
 export default Explore
+
+const ResearchPaper = () => {
+  return (
+    <div className="flex items-center space-x-4 my-3">
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-[200px]" />
+        <Skeleton className="h-4 w-[200px]" />
+      </div>
+    </div>
+  )
+}
