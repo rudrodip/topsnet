@@ -52,7 +52,11 @@ const Navbar: React.FC = () => {
                     <DropdownMenuContent>
                       <DropdownMenuLabel>My Account</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>Profile</DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link href='/profile'>
+                          Profile
+                        </Link>
+                      </DropdownMenuItem>
                       <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
