@@ -1,8 +1,16 @@
+'use client'
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSpring, animated } from 'react-spring';
 
 const HeroSection: React.FC = () => {
+  const springProps = useSpring({
+    from: { pathLength: 0 },
+    to: { pathLength: 1 },
+    config: { duration: 1000 },
+  });
   return (
     <div className="bg-transparent py-20 flex justify-evenly items-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,15 +24,15 @@ const HeroSection: React.FC = () => {
             </p>
             <div className="mt-5 sm:mt-8 lg:mt-12">
               <Link href="/explore" className="p-3 rounded-md text-sm bg-white text-black">
-              🔎 Explore
+                🔎 Explore
               </Link>
             </div>
           </div>
 
           <div className='flex justify-center items-center'>
             <div>
-              <Image 
-                src="https://media.tenor.com/RxkhHB6PUmUAAAAC/sherlock-do-your-research.gif"
+              <Image
+                src="/assets/NASA_logo.svg"
                 alt=""
                 width={500}
                 height={500}
