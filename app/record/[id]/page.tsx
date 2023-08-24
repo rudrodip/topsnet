@@ -110,7 +110,7 @@ export default function Page({ params }: { params: { id: string } }) {
         }
         {/* <ShareSocial /> */}
       </div>
-      <ChatWindow />
+      <ChatWindow recordDesc = {data?.metadata.description.toString()} />
     </div>
   </>
 }
