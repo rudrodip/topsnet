@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuthContext } from "@context/AuthContext"
@@ -46,7 +46,9 @@ function Page() {
   const { user } = useAuthContext()
   const [userData, setUserData] = useState<UserData | null>(null)
 
-  getUserData(user).then(snapshot => setUserData(snapshot))
+  useEffect(() => {
+    getUserData(user).then(snapshot => setUserData(snapshot))
+  }, [user])
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
