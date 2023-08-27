@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Tag from "@components/Tag"
+import TagSkeleton from '@components/TagSkeleton'
 import { Skeleton } from "@components/ui/skeleton"
 import PaperCard from '@components/Papers/PaperCard'
 import LoadSpinner from '@components/LoadSpinner'
@@ -108,7 +109,7 @@ const Explore = ({ params }: { params: { query: string } }) => {
           }) :
             Array(9).fill(null).map((_, index) => {
               return (
-                <p key={index} className="inline-block w-24 h-6 py-1 px-2 lg:py-2 lg:px-4 bg-gray-600 animate-pulse rounded-full shadow-md mx-1 my-1"></p>
+                <TagSkeleton key={index} />
               )
             })}
         </div>

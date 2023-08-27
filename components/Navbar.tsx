@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import ThemeToggleDropDown from './ThemeToggleDropDown';
 
 interface NavButtonProps {
   link: string;
@@ -27,12 +28,12 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className="sticky top-0 bg-gray-800 bg-opacity-30 backdrop-blur-lg z-20">
+    <nav className="sticky top-0 bg-opacity-30 backdrop-blur-lg z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/">
             <div className="flex-shrink-0">
-              <span className="text-white font-bold text-xl">TOPSnet</span>
+              <span className="font-bold text-xl">TOPSnet</span>
             </div>
           </Link>
           <div className=" md:block">
@@ -40,6 +41,7 @@ const Navbar: React.FC = () => {
               <NavButton link="Home" url="/" />
               <NavButton link="About" url="/about" />
               <NavButton link="Contact" url="/contact" />
+              <ThemeToggleDropDown />
               {user ?
                 <li>
                   <DropdownMenu>
@@ -63,7 +65,7 @@ const Navbar: React.FC = () => {
                 </li>
                 :
                 <li>
-                  <a href="/signin" className="p-3 rounded-md text-sm bg-white text-black">
+                  <a href="/signin" className="p-3 rounded-md text-black">
                     Get Started
                   </a>
                 </li>
@@ -81,7 +83,7 @@ export default Navbar;
 const NavButton: React.FC<NavButtonProps> = ({ link, url }) => {
   return (
     <li>
-      <Link href={url} className="text-gray-300 hover:bg-gray-700 hover:bg-opacity-40 px-3 py-2 rounded-md transition-all delay-100 ease-in-out hidden md:block">
+      <Link href={url} className="hover:bg-opacity-40 px-3 py-2 rounded-md transition-all delay-100 ease-in-out hidden md:block">
         {link}
       </Link>
     </li>

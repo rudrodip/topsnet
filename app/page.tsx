@@ -1,4 +1,3 @@
-import Navbar from "@components/Navbar"
 import HeroSection from "@components/HeroSection"
 import TrendingSection from "@components/TrendingSection"
 import PaperSection from "@components/PaperSection"
@@ -9,7 +8,6 @@ export default async function Home() {
   const data: ZenodoData = await zenodoApi.getRecords({ q: "neuralnetwork", size: 20 })
   return (
     <div>
-      <Navbar />
       <HeroSection />
       <div className="container">
         <TrendingSection />

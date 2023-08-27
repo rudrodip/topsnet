@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 interface TagProps {
   text: string;
@@ -7,12 +8,10 @@ interface TagProps {
 
 const Tag: React.FC<TagProps> = ({ text, url }) => {
   return (
-    <Link
-    href={url} 
-    className="inline-block py-1 px-1 lg:py-2 lg:px-4 text-sm bg-gray-200 text-gray-800 rounded-sm  text-center align-middle lg:rounded-full shadow-md hover:bg-gray-100 transition duration-200 ease-in-out mx-1 my-1">
-      {text}
-    </Link>
+    <Button asChild variant='outline' className="mx-1">
+      <Link href={url}>{text}</Link>
+    </Button>
   );
 };
 
-export default Tag
+export default Tag;

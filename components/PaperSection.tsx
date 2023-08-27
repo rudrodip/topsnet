@@ -47,7 +47,7 @@ export default function PaperSection({ data }: PaperSectionProps) {
             }) :
               Array(9).fill(null).map((_, index) => {
                 return (
-                  <p key={index} className="inline-block w-24 h-6 py-1 px-2 lg:py-2 lg:px-4 bg-gray-600 animate-pulse rounded-full shadow-md mx-1 my-1"></p>
+                  <p key={index} className="inline-block w-24 h-6 py-1 px-2 lg:py-2 lg:px-4 bg-secondary animate-pulse rounded-full shadow-md mx-1 my-1"></p>
                 )
               })}
           </div>

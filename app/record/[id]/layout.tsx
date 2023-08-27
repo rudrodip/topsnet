@@ -1,6 +1,5 @@
 'use client'
 
-import Navbar from "@components/Navbar";
 import { ChatProvider } from "@context/ChatContext";
 
 interface RootLayoutProps {
@@ -13,7 +12,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <div className="main">
         <div className="gradient" />
       </div>
-      <Navbar />
       <ChatProvider>
       {children}
       </ChatProvider>

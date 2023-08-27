@@ -22,6 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import TagSkeleton from '@components/TagSkeleton'
 import { Input } from '@components/ui/input'
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -106,7 +107,7 @@ const Explore = () => {
           }) :
             Array(9).fill(null).map((_, index) => {
               return (
-                <p key={index} className="inline-block w-24 h-6 py-1 px-2 lg:py-2 lg:px-4 bg-gray-600 animate-pulse rounded-full shadow-md mx-1 my-1"></p>
+                <TagSkeleton key={index} />
               )
             })}
         </div>
@@ -123,7 +124,7 @@ const Explore = () => {
                   <FormItem>
                     <FormLabel>Search</FormLabel>
                     <FormControl>
-                      <Input type='text' placeholder="Search" {...field} className='bg-gray-800 bg-opacity-30 shadow-lg' />
+                      <Input type='text' placeholder="Search" {...field} className='' />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
