@@ -2,8 +2,8 @@ import React from 'react';
 
 const ContactPage = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      <div className="bg-gray-800 bg-opacity-40 max-w-lg mx-auto p-8 shadow-lg rounded-lg">
+    <div className="min-h-[70vh] flex flex-col items-center justify-center">
+      <div className="bg-opacity-40 max-w-lg mx-auto p-8 shadow-lg rounded-lg bg-secondary">
         <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
         <p className="text-lg mb-6">Have questions or want to get in touch? Reach out to us through the following channels:</p>
         <div className="flex flex-col space-y-4">
@@ -13,7 +13,7 @@ const ContactPage = () => {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              className="h-6 w-6 text-gray-300"
+              className="h-6 w-6 "
             >
               <path
                 strokeLinecap="round"
@@ -24,7 +24,7 @@ const ContactPage = () => {
             </svg>
             <a
               href="mailto:official.rudrodipsarker@gmail.com"
-              className="underline_animation text-blue-600"
+              className="underline_animation"
             >
               official.rudrodipsarker@gmail.com
             </a>
@@ -35,7 +35,7 @@ const ContactPage = () => {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              className="h-6 w-6 text-gray-300"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"
@@ -48,7 +48,7 @@ const ContactPage = () => {
               href="https://github.com/rudrodip"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline_animation text-blue-600"
+              className="underline_animation"
             >
               github.com/rudrodip
             </a>
@@ -59,7 +59,7 @@ const ContactPage = () => {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              className="h-6 w-6 text-gray-500"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"
@@ -69,12 +69,12 @@ const ContactPage = () => {
               />
             </svg>
             <a
-              href="https://rudrodipsarker.vercel.app"
+              href="https://rudrodip.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline_animation text-blue-600"
+              className="underline_animation"
             >
-              rudrodipsarker.vercel.app
+              rudrodip.vercel.app
             </a>
           </div>
         </div>

@@ -9,6 +9,7 @@ import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import { cn } from "@lib/utils";
 import Navbar from "@components/Navbar";
+import Footer from "@components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,17 +41,22 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <html lang="en" suppressHydrationWarning>
         <head />
         <body className={cn(inter.variable, fontHeading.variable)}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <div className="main">
-            <div className="gradient" />
-          </div>
-          <AuthContextProvider>
-            <ExplorerContextProvider>
-              <Navbar />
-              {children}
-              </ExplorerContextProvider>
-          </AuthContextProvider>
-          <Toaster />
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            <div className="flex flex-col min-h-screen">
+              <div className="flex-grow">
+                <div className="main">
+                  <div className="gradient" />
+                </div>
+                <AuthContextProvider>
+                  <ExplorerContextProvider>
+                    <Navbar />
+                    {children}
+                    <Footer />
+                  </ExplorerContextProvider>
+                </AuthContextProvider>
+                <Toaster />
+              </div>
+            </div>
           </ThemeProvider>
         </body>
       </html>

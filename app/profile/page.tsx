@@ -90,7 +90,7 @@ function Page() {
         <h1 className="text-center">
           <a className="text-gray-500" href={`mailto:${user.email}`}>{user.email}</a>
         </h1>
-        <Card className="bg-gray-800 bg-opacity-40 rounded-xl backdrop-blur-lg my-10">
+        <Card>
           <CardHeader>
             <CardTitle>Profile</CardTitle>
             <CardDescription>
@@ -107,7 +107,7 @@ function Page() {
                     <FormItem>
                       <FormLabel>OpenAI API Key</FormLabel>
                       <FormControl>
-                        <Input type='text' placeholder={userData?.openaikey || "OPENAI Key"} {...field} className="bg-gray-800 bg-opacity-30 shadow-lg" />
+                        <Input type='text' placeholder={userData?.openaikey || "OPENAI Key"} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -121,7 +121,7 @@ function Page() {
                     <FormItem>
                       <FormLabel>ORCID</FormLabel>
                       <FormControl>
-                        <Input type='text' placeholder={userData?.orcid || "e.g. 0009000676737078"} {...field} className="bg-gray-800 bg-opacity-30 shadow-lg" />
+                        <Input type='text' placeholder={userData?.orcid || "e.g. 0009000676737078"} {...field}/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
